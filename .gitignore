@@ -1,0 +1,11 @@
+.DS_Store
+.vagrant
+.secrets/**
+.vscode/settings.json
+!.secrets/.gitkeep
+results/
+.terraform/
+*.tfstate*
+*.tfvars
+*.crt
+*.key
