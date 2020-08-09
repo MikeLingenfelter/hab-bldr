@@ -1,10 +1,10 @@
 #!/bin/bash
 
-yum -y install git jq unzip tar
+# yum -y install git jq unzip tar
 
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-./aws/install
+# curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+# unzip awscliv2.zip
+# ./aws/install
 
 # AWS Secrets to retreive
 declare -a secrets=("BLDR_RDS_USER"
@@ -18,13 +18,13 @@ declare -a secrets=("BLDR_RDS_USER"
 # Retrive AWS Sectets
 for secret in "${secrets[@]}"
 do
-  $(aws secretsmanager get-secret-value --secret-id $secret --query SecretString --output text --region us-east-1 | \
+  $(aws secretsmanager get-secret-value --secret-id $secret --query SecretString --output text --region $AWS_REGION | \
     jq -r 'to_entries[] | "export \(.key)=\(.value)"')
 done
 
 # Other Env Vars
-export HAB_LICENSE=accept
-export BLDR_POSTGRES_HOST=hab-database.c7bu6q2aenah.us-east-1.rds.amazonaws.com
+# export HAB_LICENSE=accept
+# export BLDR_POSTGRES_HOST=hab-database.c7bu6q2aenah.us-east-1.rds.amazonaws.com
 
 git clone https://github.com/MikeLingenfelter/hab-bldr.git
 
